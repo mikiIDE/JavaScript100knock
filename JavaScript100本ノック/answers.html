@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript100本ノック！</title>
+</head>
+
+<body>
+    <h1>JavaScript100本ノック！</h1>
+    <h2>あくまでも回答の一例なので、異なる記述でも正しいreturnならジャスティスです！！</h2>
+    <p>力尽きたので途中までしか回答がありません。後は頼みました。</p>
+
+
+    <script>
+
+        // 1. 2つの数値を比較して大きい方を返す関数
+        function compareNumbers(a, b) {
+            if (a > b) {
+                return a;
+            } else {
+                return b;
+            }
+        }
+        console.log(compareNumbers(2, 5)); // 5
+
+        //その他の答え方
+        // 三項演算子を使用した短縮版
+        function compareNumbers(a, b) {
+            return a > b ? a : b;
+        }
+        // Math.maxを使用した更に短い版
+        function compareNumbers(a, b) {
+            return Math.max(a, b);
+        }
+        //-------------------
+
+        // 2. 引数の数値が偶数か奇数かを返す関数
+        function isEven(num) {
+            if (num % 2 === 0) {
+                return "even";
+            } else {
+                return "odd";
+            }
+        }
+        console.log(isEven(4)); // "even"
+
+        //その他の答え方
+        // 三項演算子を使用した短縮版
+        function isEven(num) {
+            return num % 2 === 0 ? "even" : "odd";
+        }
+        // -------------------
+
+        // 3. 文字列を逆順にする関数
+        function reverseString(str) {
+            let result = "";
+            for (let i = 0; i < str.length; i++) {
+                result += str[str.length - i - 1];
+            }
+            return result;
+        }
+        console.log(reverseString("hello")); // "olleh"
+
+        //その他の答え方
+        function reverseString(str) {
+            let result = "";
+            for (let i = str.length - 1; i >= 0; i--) {
+                result += str[i];
+            }
+            return result;
+        }
+        //javascriptのメソッド(split/reverse/join)を使うと1行でOK
+        function reverseString(str) {
+            return str.split('').reverse().join('');
+        }
+
+        // ------------------
+
+        // 4. 配列の合計値を計算する関数
+        function sumArray(arr) {
+            let sum = 0;
+            for (let i = 0; i < arr.length; i++) {
+                sum += arr[i];
+            }
+            return sum;
+        }
+        console.log(sumArray([1, 2, 3, 4, 5])); // 15
+
+        //その他の答え方
+        // より現代的な書き方（forEachを使用）
+        function sumArray(arr) {
+            let sum = 0;
+            arr.forEach(num => sum += num);
+            return sum;
+        }
+        //さらにモダンな書き方（メソッドreduceを使用）
+        function sumArray(arr) {
+            return arr.reduce((sum, num) => sum + num, 0);
+        }
+
+        //-------------------
+
+        // 5. 文字列の母音の数を数える関数
+        function countVowels(str) {
+            let cnt = 0;
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] === 'a' || str[i] === 'e' || str[i] === 'i' || str[i] === 'o' || str[i] === 'u')
+                    cnt += 1;
+            }
+            return cnt;
+        }
+        console.log(countVowels("hello")); // 2
+
+        //その他の答え方
+        // 方法1: includesを使う（最も読みやすい）
+        function countVowels(str) {
+            const vowels = ['a', 'e', 'i', 'o', 'u'];
+            let cnt = 0;
+            for (let i = 0; i < str.length; i++) {
+                if (vowels.includes(str[i])) {
+                    cnt++;
+                }
+            }
+            return cnt;
+        }
+        // 方法2: forEachを使う
+        function countVowels(str) {
+            const vowels = ['a', 'e', 'i', 'o', 'u'];
+            let cnt = 0;
+            str.split('').forEach(char => {
+                if (vowels.includes(char)) {
+                    cnt++;
+                }
+            });
+            return cnt;
+        }
+        // 方法3: filterを使う（より現代的）
+        function countVowels(str) {
+            const vowels = ['a', 'e', 'i', 'o', 'u'];
+            return str.split('').filter(char => vowels.includes(char)).length;
+        }
+
+        //-------------------
+
+        // 6. 数値を2乗する関数
+        function square(num) {
+            return num * num
+        }
+        console.log(square(4)); // 16
+
+        //その他の答え方
+        // メソッドMath.powを使う方法
+        function square(num) {
+            return Math.pow(num, 2);
+        }
+        // 指数演算子（**）を使う方法（ES2016以降）
+        function square(num) {
+            return num ** 2;
+        }
+
+        //-------------------
+
+        // 7. 配列の最大値を見つける関数
+        function findMax(arr) {
+            let max = arr[0];
+            for (let i = 1; i < arr.length; i++) {
+                if (max < arr[i]) {
+                    max = arr[i];
+                }
+            }
+            return max;
+        }
+        console.log(findMax([1, 5, 3, 9, 2])); // 9
+
+        //その他の答え方
+        // Math.maxと展開演算子を使用
+        function findMax(arr) {
+            return Math.max(...arr);
+        }
+        // reduceメソッドを使用
+        function findMax(arr) {
+            return arr.reduce((max, current) =>
+                current > max ? current : max
+            );
+        }
+
+        //-------------------
+
+        // 8. 文字列が回文かどうかをチェックする関数
+        function isPalindrome(str) {
+            // 前半と後半を比較していく
+            for (let i = 0; i < str.length / 2; i++) {
+                // 前からi番目の文字
+                let frontChar = str[i];
+                // 後ろからi番目の文字
+                let backChar = str[str.length - 1 - i];  // -1を追加
+                // 文字が異なれば回文ではない
+                if (frontChar !== backChar) {
+                    return false;  // すぐにfalseを返す
+                }
+            }
+            // ループを最後まで通過できれば回文
+            return true;
+        }
+        console.log(isPalindrome("level")); // true
+
+        //その他の答え方
+        function isPalindrome(str) {
+            // 文字列を逆順にして比較
+            let reversed = str.split('').reverse().join('');
+            return str === reversed;
+        }
+
+        //-------------------
+
+        // 9. 摂氏を華氏に変換する関数
+        //華氏 = 摂氏 × 9/5 + 32(例：100℃ → 212°F)
+        function celsiusToFahrenheit(celsius) {
+            return celsius * 9 / 5 + 32;
+        }
+        console.log(celsiusToFahrenheit(0)); // 32
+
+        //その他の答え方
+        // 小数点以下を制限したい場合
+        function celsiusToFahrenheit(celsius) {
+            return (celsius * 9 / 5 + 32).toFixed(1); // 小数点第1位まで
+        }
+
+        // -------------------
+
+        // 10. 文字列内の特定の文字の出現回数を数える関数
+        function countChar(str, char) {
+            let cnt = 0;
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] === char) {
+                    cnt++;
+                }
+            } return cnt;
+        }
+        console.log(countChar("hello", "l")); // 2
+
+        //その他の答え方
+        // splitとfilterを使用
+        function countChar(str, char) {
+            return str.split('').filter(c => c === char).length;
+        }
+        // forEachを使用
+        function countChar(str, char) {
+            let count = 0;
+            str.split('').forEach(c => {
+                if (c === char) count++;
+            });
+            return count;
+        }
+
+        //-------------------
+
+        // 11. 配列の平均値を計算する関数
+        function calculateAverage(arr) {
+            let sum = 0;
+            for (let i = 0; i < arr.length; i++) {
+                sum = sum + arr[i]; //sum += arr[i];こっちのがスマート
+            }
+            return sum / arr.length;
+        }
+        console.log(calculateAverage([1, 2, 3, 4, 5])); // 3
+
+        //その他の答え方
+        // reduceを使用した方法
+        function calculateAverage(arr) {
+            return arr.reduce((sum, num) => sum + num, 0) / arr.length;
+        }
+        // forEachを使用した方法
+        function calculateAverage(arr) {
+            let sum = 0;
+            arr.forEach(num => sum += num);
+            return sum / arr.length;
+        }
+
+        //-------------------
+
+        // 12. 数値の階乗を計算する関数
+        function factorial(n) {
+            let result = 1;
+            for (let i = 0; i < n; i++) {
+                result = result * (n - i); //result *= (n-i);
+            }
+            return result;
+        }
+        console.log(factorial(5)); // 120
+
+        //その他の答え方
+        // 降順のforループを使用（より直感的かも）
+        function factorial(n) {
+            let result = 1;
+            for (let i = n; i >= 1; i--) {
+                result *= i;  // *= 演算子を使用
+            }
+            return result;
+        }
+        // 再帰を使用した方法
+        function factorial(n) {
+            if (n <= 1) return 1;
+            return n * factorial(n - 1);
+        }
+
+        //-------------------
+
+        // 13. 文字列の最初の文字を大文字にする関数
+        //toUpperCase()が大文字にするメソッド
+        function capitalize(str) {
+            let firstCharactor = str[0].toUpperCase();
+            let rest = "";
+            for (let i = 1; i < str.length; i++) {
+                rest += str[i];
+            }
+            return firstCharactor + rest;
+        }
+        console.log(capitalize("hello")); // "Hello"
+
+        //その他の答え方
+        function capitalize(str) {
+            return str[0].toUpperCase() + str.slice(1); //slice(n):n文字目以降を取り出し配列を作るメソッド
+        }//もし配列.slice(a,b)の場合は配列のa番目から(b-1)番目までを取り出す
+
+        //-------------------
+
+        // 14. 配列内の偶数の数を数える関数
+        function countEvenNumbers(arr) {
+            let cnt = 0;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] % 2 === 0) {
+                    cnt++;
+                }
+            } return cnt;
+        }
+        console.log(countEvenNumbers([1, 2, 3, 4, 5, 6])); // 3
+
+        // -------------------
+
+        // 15. 指定された範囲内のランダムな整数を生成する関数
+        function randomInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        console.log(randomInteger(1, 10)); // ランダムな数値
+
+        //落とし穴（最小値minが1の時は以下の関数でも動作するが、1以外の最小値だとズレが生じる）
+        function randomInteger1(min, max) {
+            return Math.floor(Math.random() * max) + min;
+        }
+
+        //-------------------
+
+        // 16. 文字列から空白を除去する関数
+        //引数.replaceAll(a,b)→aをbに変換するメソッド
+        function removeSpaces(str) {
+            return str.replaceAll(" ", "");
+        }
+        console.log(removeSpaces("hello world")); // "helloworld"
+
+        //-------------------
+
+        // 17. 配列内の特定の要素の数を数える関数
+        function countElement(arr, element) {
+            let count = 0;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] === element) {
+                    count++;
+                }
+            } return count;
+        }
+        console.log(countElement([1, 2, 2, 3, 2], 2)); // 3
+
+        //その他の答え方
+        //for Eachを使う方法
+        function countElement(arr, element) {
+            let count = 0;
+            arr.forEach(item => {
+                if (item === element) count++;
+            });
+            return count;
+        }
+        // -------------------
+
+        // 18. 数値が素数かどうかをチェックする関数
+        function isPrime(num) {
+            if (num < 2) return false;
+            for (let i = 2; i < num; i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+        console.log(isPrime(7)); // true
+
+        //その他の答え方
+        // 最適化解答（とAIは申しております）
+        function isPrime(num) {
+            if (num < 2) return false;
+            if (num === 2) return true;
+            if (num % 2 === 0) return false;
+            for (let i = 3; i <= Math.sqrt(num); i += 2) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+        //-------------------
+
+        // 19. 配列を逆順にする関数
+        function reverseArray(arr) {
+            let result = [];
+            for (let i = arr.length - 1; i >= 0; i--) {
+                result.push(arr[i]);
+            }
+            return result;
+        }
+        console.log(reverseArray([1, 2, 3])); // [3, 2, 1]
+
+        //-------------------
+
+        // 20. 文字列内の単語数を数える関数
+        function countWords(str) {
+            let cnt = 1;
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] === " ") {
+                    cnt++;
+                }
+            } return cnt;
+        }
+        console.log(countWords("Hello world")); // 2
+
+        //その他の答え方
+        function countWords(str) {
+            return str.split(' ').length; //' '空白があるところで区切り、その長さを返す
+        }
+
+        // -------------------
+
+        // 21. 配列内の重複を削除する関数
+        function removeDuplicates(arr) {
+            let result = [];
+            // for(let...of...)元の配列の要素を1つずつ確認する
+            for (let item of arr) {
+                // もしresultにその要素がなければ追加(push)する
+                if (!result.includes(item)) {
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+        console.log(removeDuplicates([1, 2, 2, 3, 3, 4])); // [1, 2, 3, 4]
+
+        //-------------------
+
+        // 22. オブジェクトのキーと値を入れ替える関数
+        function swapKeysAndValues(obj) {
+            let result = {}; //オブジェクトの入れ物resultを用意
+            for (let key in obj) {
+                result[obj[key]] = key; //obj[key]=1,obj[key]=keyで{1:a}に変換してる
+            }
+            return result;
+        }
+        console.log(swapKeysAndValues({ a: 1, b: 2 })); // {1: "a", 2: "b"}
+
+        // -------------------
+
+        // 23. 配列をチャンク（小さな配列）に分割する関数
+        // 例：[1,2,3,4,5]をサイズ2で分割 → [[1,2], [3,4], [5]]
+        function chunkArray(arr, size) {
+            let result = [];
+            for (let i = 0; i < arr.length; i += size) {
+                result.push(arr.slice(i, i + size)); //sliceメソッド
+            }
+            return result;
+        }
+        console.log(chunkArray([1, 2, 3, 4, 5], 2)); // [[1,2], [3,4], [5]]
+
+        // -------------------
+
+        // 24. 文字列内の各文字の出現回数を返す関数
+        function charFrequency(str) {
+            let result = {};
+            for (let char of str) {
+                // もし、その文字が既にresultにあれば、値を1増やす
+                // まだない場合は、値を1にする
+                if (result[char]) {
+                    result[char] = result[char] + 1;
+                } else {
+                    result[char] = 1;
+                }
+            }
+            return result;
+        }
+        console.log(charFrequency("hello")); // {h: 1, e: 1, l: 2, o: 1}
+
+        //-------------------
+
+        // 25. フィボナッチ数列のn番目の数を返す関数
+        // フィボナッチ数列：前の2つの数を足した数が次の数となる数列
+        // 例：1, 1, 2, 3, 5, 8, 13, 21, 34...
+        function fibonacci(n) {
+            // 最初の2つの数字を用意
+            let a = 1;  // 1つ前の数
+            let b = 1;  // 現在の数
+
+            // 3番目以降を計算
+            // 3番目から始めるので i は 3 からスタート
+            for (let i = 3; i <= n; i++) {
+                // 次の数を計算
+                let c = a + b;
+                // 数字をずらす
+                a = b;    // 1つ前の数を更新
+                b = c;    // 現在の数を更新
+            }
+            // n番目の数を返す
+            return b;
+        }
+        console.log(fibonacci(7)); // 13
+
+        // -------------------
+
+        // 26. 配列内の要素を指定回数分繰り返す関数
+        function repeatElements(arr, n) {
+            let result = [];
+            for (let i = 1; i <= n; i++) {
+                for (let item of arr) {
+                    result.push(item);
+                }
+            } return result;
+        }
+        console.log(repeatElements([1, 2], 3)); // [1, 2, 1, 2, 1, 2]
+
+        //-------------------
+
+        // 27. オブジェクトの深いコピーを作成する関数
+        // 深いコピー：ネストされたオブジェクトも完全にコピーする
+        function deepCopy(obj) {
+            // もしobjがオブジェクトでなければ、そのまま返す
+            if (typeof obj !== 'object' || obj === null) {
+                return obj;
+            }
+            // 新しい空のオブジェクト（または配列）を作る
+            let copy = Array.isArray(obj) ? [] : {};
+            // オブジェクトの各プロパティに対して再帰的にコピーを行う
+            for (let key in obj) {
+                copy[key] = deepCopy(obj[key]);
+            }
+            return copy;
+        }
+        console.log(deepCopy({ a: 1, b: { c: 2 } }));
+
+        // -------------------
+
+        // 28. 配列内の最も頻出する要素を見つける関数
+        function mostFrequent(arr) {
+            // 各要素の出現回数を記録するオブジェクトを作る
+            let count = {};
+            // 配列の要素を1つずつ数える
+            for (let num of arr) {
+                // もし既に数えていたら1を足す、初めてなら1にする
+                if (count[num]) {
+                    count[num] = count[num] + 1;
+                } else {
+                    count[num] = 1;
+                }
+            }
+            // 最も多く出現する要素を探す
+            let maxCount = 0;  // 最大出現回数
+            let maxNum = null; // 最も多く出現する要素
+            // countオブジェクトの中身を1つずつチェック
+            for (let num in count) {
+                if (count[num] > maxCount) {
+                    maxCount = count[num];
+                    maxNum = num;
+                }
+            }
+            // 文字列を数値に変換して返す
+            return maxNum;
+        }
+        console.log(mostFrequent([1, 2, 2, 3, 2, 4])); // 2
+
+        //-------------------
+
+        // 29. 文字列をキャメルケースに変換する関数
+        function toCamelCase(str) {
+            // まず_で文字列を分割して配列にする
+            let words = str.split('_');  // "hello_world" → ["hello", "world"]
+            // 最初の単語はそのまま使う
+            let result = words[0];  // "hello"
+            // 2番目以降の単語は最初の文字を大文字にする
+            for (let i = 1; i < words.length; i++) {
+                // 単語の最初の文字を大文字に変換
+                let firstChar = words[i][0].toUpperCase();  // "w" → "W"
+                // 残りの部分はそのまま
+                let rest = words[i].slice(1);  // "orld"
+                // 結合する
+                result = result + firstChar + rest;
+            }
+            return result;
+        }
+        console.log(toCamelCase("hello_world")); // "helloWorld"
+
+        //  -------------------
+
+        // 30. 2つの配列の共通要素を見つける関数
+        function findCommonElements(arr1, arr2) {
+            let result = [];
+            // 1つ目の配列の要素を1つずつチェック
+            for (let item of arr1) {
+                // その要素が2つ目の配列にもあるかチェック
+                if (arr2.includes(item)) {
+                    // 両方の配列にある要素をresultに追加
+                    result.push(item);
+                }
+            }
+            return result;
+        }
+        console.log(findCommonElements([1, 2, 3], [2, 3, 4])); // [2, 3]
+
+        //-------------------
+
+        // 31. 文字列を指定の長さで切り詰めて末尾に...を追加する関数
+        function truncateString(str, length) { }
+        console.log(truncateString("Hello World", 5)); // "Hello..."
+
+        //-------------------
+
+        // 32. 配列内の数値を指定された桁数に丸める関数
+        function roundArray(arr, decimals) { }
+        console.log(roundArray([1.234, 2.345, 3.456], 2)); // [1.23, 2.35, 3.46]
+
+        //-------------------
+
+        // 33. オブジェクトの配列を特定のキーでソートする関数
+        function sortByKey(arr, key) { }
+        console.log(sortByKey([
+            { name: "Bob", age: 30 },
+            { name: "Alice", age: 25 }
+        ], "age")); // [{name: "Alice", age: 25}, {name: "Bob", age: 30}]
+
+        //-------------------
+
+        // 34. 文字列内の指定された単語を別の単語に置換する関数
+        function replaceWord(str, oldWord, newWord) { }
+        console.log(replaceWord("Hello world", "world", "JavaScript")); // "Hello JavaScript"
+
+        //-------------------
+
+        // 35. 配列内の数値の移動平均を計算する関数
+        function movingAverage(arr, windowSize) { }
+        console.log(movingAverage([1, 2, 3, 4, 5], 3)); // [2, 3, 4]
+
+        //-------------------
+
+        // 36. 数値を金額表記に変換する関数（3桁区切りのカンマ付き）
+        function formatCurrency(number) { }
+        console.log(formatCurrency(1234567)); // "1,234,567"
+
+        //-------------------
+
+        // 37. 配列内の要素を指定された順序で並べ替える関数
+        function customSort(arr, order) { }
+        console.log(customSort(['apple', 'banana', 'orange'], ['banana', 'apple', 'orange']));
+        // ['banana', 'apple', 'orange']
+
+        //-------------------
+
+        // 38. 文字列の中で最も長い単語を見つける関数
+        function findLongestWord(str) { }
+        console.log(findLongestWord("The quick brown fox")); // "quick"
+
+        //-------------------
+
+        // 39. 日付文字列をフォーマットする関数
+        function formatDate(dateStr) { }
+        console.log(formatDate("2024-01-15")); // "15/01/2024"
+
+        //-------------------
+
+        // 40. 配列内の連続する数値の最長のシーケンスを見つける関数
+        function findLongestSequence(arr) { }
+        console.log(findLongestSequence([1, 2, 3, 5, 6, 7, 8, 10])); // [5, 6, 7, 8]
+
+        //-------------------
+
+        // 41. 配列内の数値を指定された範囲内に収める関数
+        // 最小値より小さい場合は最小値に、最大値より大きい場合は最大値にする
+        function clampNumbers(arr, min, max) { }
+        console.log(clampNumbers([1, 5, 10, 15, 20], 5, 15)); // [5, 5, 10, 15, 15]
+
+        //-------------------
+
+        // 42. 時間（時：分）を分数に変換する関数
+        // 例："2:30" → 150（2時間30分 = 150分）
+        function timeToMinutes(timeStr) { }
+        console.log(timeToMinutes("2:30")); // 150
+
+        //-------------------
+
+        // 43. 文字列を指定された回数繰り返す関数
+        function repeatString(str, count) { }
+        console.log(repeatString("ha", 3)); // "hahaha"
+
+        //-------------------
+
+        // 44. 配列内の要素を左に1つずらす関数（最初の要素は最後に移動）
+        function rotateLeft(arr) { }
+        console.log(rotateLeft([1, 2, 3, 4])); // [2, 3, 4, 1]
+
+        //-------------------
+
+        // 45. 文字列内の数字の合計を計算する関数
+        function sumDigits(str) { }
+        console.log(sumDigits("a1b2c3")); // 6
+
+        //-------------------
+
+        // 46. 指定された条件に一致する配列の要素のインデックスを全て返す関数
+        function findAllIndexes(arr, element) { }
+        console.log(findAllIndexes([1, 2, 1, 3, 1], 1)); // [0, 2, 4]
+
+        //-------------------
+
+        // 47. 2つの文字列がアナグラムかどうかをチェックする関数
+        // アナグラム：文字を並べ替えて別の単語になること（例："listen" と "silent"）
+        function areAnagrams(str1, str2) { }
+        console.log(areAnagrams("listen", "silent")); // true
+
+        //-------------------
+
+        // 48. 配列内の数値の階差数列を返す関数
+        // 階差数列：隣り合う要素の差を順に並べた数列
+        function getDifferences(arr) { }
+        console.log(getDifferences([1, 3, 6, 10])); // [2, 3, 4]
+
+        //-------------------
+
+        // 49. 文字列の各単語の最初の文字を大文字にする関数
+        function capitalizeWords(str) { }
+        console.log(capitalizeWords("hello world")); // "Hello World"
+
+        //-------------------
+
+        // 50. 配列内の要素を指定された個数ごとにグループ化する関数
+        function groupElements(arr, size) { }
+        console.log(groupElements(['a', 'b', 'c', 'd'], 2)); // [['a', 'b'], ['c', 'd']]
+
+        //-------------------
+
+        // 51. 配列内の数値を降順（大きい順）にソートする関数
+        function sortDescending(arr) { }
+        console.log(sortDescending([3, 1, 4, 1, 5])); // [5, 4, 3, 1, 1]
+
+        //-------------------
+
+        // 52. 文字列内の単語を逆順にする関数（単語自体は逆にしない）
+        function reverseWords(str) { }
+        console.log(reverseWords("Hello World")); // "World Hello"
+
+        //-------------------
+
+        // 53. 指定された文字で配列の要素を結合し、前後にも付ける関数
+        function wrapJoin(arr, separator) { }
+        console.log(wrapJoin(["a", "b", "c"], "*")); // "*a*b*c*"
+
+        //-------------------
+
+        // 54. 数値の配列から移動平均を計算する関数（3つずつの平均）
+        function movingAverage(arr) { }
+        console.log(movingAverage([1, 2, 3, 4, 5])); // [2, 3, 4]
+
+        //-------------------
+
+        // 55. オブジェクトから指定されたキーの値だけを取り出す関数
+        function pickKeys(obj, keys) { }
+        console.log(pickKeys({ a: 1, b: 2, c: 3 }, ["a", "c"])); // {a: 1, c: 3}
+
+        //-------------------
+
+        // 56. 文字列内の特定のパターンにマッチする部分を数える関数
+        function countPattern(str, pattern) { }
+        console.log(countPattern("hahaha", "ha")); // 3
+
+        //-------------------
+
+        // 57. 配列内の重複する要素を指定された回数だけ残す関数
+        function limitDuplicates(arr, limit) { }
+        console.log(limitDuplicates([1, 1, 1, 2, 2, 3], 2)); // [1, 1, 2, 2, 3]
+
+        //-------------------
+
+        // 58. 2つの配列の要素を交互に結合する関数
+        function interleave(arr1, arr2) { }
+        console.log(interleave([1, 3], [2, 4])); // [1, 2, 3, 4]
+
+        //-------------------
+
+        // 59. 文字列内の連続する重複文字を1つにまとめる関数
+        function removeDuplicateChars(str) { }
+        console.log(removeDuplicateChars("aabbcc")); // "abc"
+
+        //-------------------
+
+        // 60. 配列内の要素を指定された数で割った余りでグループ化する関数
+        function groupByRemainder(arr, divisor) { }
+        console.log(groupByRemainder([1, 2, 3, 4, 5], 3));
+        // { 0: [3], 1: [1, 4], 2: [2, 5] }
+
+        //-------------------
+
+        // 61. 数値を指定された桁数の文字列に変換する関数（0埋め）
+        function padNumber(num, length) { }
+        console.log(padNumber(42, 4)); // "0042"
+
+        //-------------------
+
+        // 62. 文字列の配列から最も多く出現する文字列を見つける関数
+        function mostFrequentString(arr) { }
+        console.log(mostFrequentString(["a", "b", "a", "c", "b", "a"])); // "a"
+
+        //-------------------
+
+        // 63. 指定された数値範囲内の全ての数値を配列として返す関数
+        function range(start, end) { }
+        console.log(range(2, 5)); // [2, 3, 4, 5]
+
+        //-------------------
+
+        // 64. オブジェクトの配列から特定の条件を満たす要素を検索する関数
+        function findByProperty(arr, prop, value) { }
+        console.log(findByProperty([
+            { id: 1, name: "John" },
+            { id: 2, name: "Jane" }
+        ], "name", "John")); // {id: 1, name: "John"}
+
+        //-------------------
+
+        // 65. 文字列を指定された区切り文字で分割し、前後の空白を削除する関数
+        function splitAndTrim(str, separator) { }
+        console.log(splitAndTrim(" a, b ,c ", ",")); // ["a", "b", "c"]
+
+        //-------------------
+
+        // 66. 配列内の要素を指定された数だけ右にローテーションする関数
+        function rotateRight(arr, k) { }
+        console.log(rotateRight([1, 2, 3, 4, 5], 2)); // [4, 5, 1, 2, 3]
+
+        //-------------------
+
+        // 67. 文字列の中から指定されたキーワードの前後の文字を抽出する関数
+        function extractContext(str, keyword, contextLength) { }
+        console.log(extractContext("Hello world JavaScript", "world", 2)); // "lo world Ja"
+
+        //-------------------
+
+        // 68. 配列内の連続する同じ要素をグループ化する関数
+        function groupConsecutive(arr) { }
+        console.log(groupConsecutive([1, 1, 2, 3, 3, 3])); // [[1,1], [2], [3,3,3]]
+
+        //-------------------
+
+        // 69. 数値の配列から指定された合計値になる2つの要素のインデックスを見つける関数
+        function findPairIndices(arr, targetSum) { }
+        console.log(findPairIndices([1, 2, 3, 4], 7)); // [2, 3]
+
+        //-------------------
+
+        // 70. オブジェクトのネストされたキーの値を取得する関数
+        function getNestedValue(obj, keyPath) { }
+        console.log(getNestedValue({ a: { b: { c: 1 } } }, "a.b.c")); // 1
+
+        //-------------------
+
+        // 71. 配列内の要素を指定された条件でフィルタリングし、インデックスを保持する関数
+        function filterWithIndex(arr, condition) { }
+        console.log(filterWithIndex([1, 4, 2, 5, 3], x => x > 3));
+        // [{value: 4, index: 1}, {value: 5, index: 3}]
+
+        //-------------------
+
+        // 72. 文字列の中の指定された文字の位置を全て返す関数
+        function findAllPositions(str, char) { }
+        console.log(findAllPositions("hello world", "l")); // [2, 3, 9]
+
+        //-------------------
+
+        // 73. オブジェクトの配列を指定されたキーの値でグループ化する関数
+        function groupByKey(arr, key) { }
+        console.log(groupByKey([
+            { type: "A", value: 1 },
+            { type: "B", value: 2 },
+            { type: "A", value: 3 }
+        ], "type")); // {A: [{value: 1}, {value: 3}], B: [{value: 2}]}
+
+        //-------------------
+
+        // 74. 指定された範囲内のランダムな整数を重複なく生成する関数
+        function generateUniqueRandom(min, max, count) { }
+        console.log(generateUniqueRandom(1, 10, 3)); // [4, 7, 2]
+
+        //-------------------
+
+        // 75. 文字列内の単語の出現頻度を計算する関数
+        function wordFrequency(str) { }
+        console.log(wordFrequency("hello world hello")); // {hello: 2, world: 1}
+
+        //-------------------
+
+        // 76. 配列内の要素を指定された条件で分割する関数
+        function partitionArray(arr, condition) { }
+        console.log(partitionArray([1, 2, 3, 4], x => x % 2 === 0));
+        // [[2, 4], [1, 3]]
+
+        //-------------------
+
+        // 77. 日付文字列を指定されたフォーマットに変換する関数
+        function formatDate(dateStr, format) { }
+        console.log(formatDate("2024-01-15", "DD/MM/YYYY")); // "15/01/2024"
+
+        //-------------------
+
+        // 78. 配列内の要素を指定された関数で変換し、元の位置を保持する関数
+        function mapWithPosition(arr, fn) { }
+        console.log(mapWithPosition([1, 2, 3], x => x * 2));
+        // [{value: 2, originalIndex: 0}, {value: 4, originalIndex: 1}, {value: 6, originalIndex: 2}]
+
+        //-------------------
+
+        // 79. 文字列内の括弧の対応が正しいかチェックする関数
+        function checkBrackets(str) { }
+        console.log(checkBrackets("(a(b)c)")); // true
+
+        //-------------------
+
+        // 80. オブジェクトの配列から指定されたキーの値の範囲内の要素を抽出する関数
+        function filterByRange(arr, key, min, max) { }
+        console.log(filterByRange([
+            { id: 1, value: 10 },
+            { id: 2, value: 20 },
+            { id: 3, value: 30 }
+        ], "value", 15, 25)); // [{id: 2, value: 20}]
+
+        //-------------------
+
+        // ここからは中級レベルの問題です（81-100）
+
+        //-------------------
+
+        // 81. 数値の配列から指定された合計値に最も近い組み合わせを見つける関数
+        function findClosestSum(arr, target) { }
+        console.log(findClosestSum([1, 2, 3, 4, 5], 10)); // [4, 5]
+
+        //-------------------
+
+        // 82. 文字列の中から最長の回文を見つける関数
+        function findLongestPalindrome(str) { }
+        console.log(findLongestPalindrome("babad")); // "bab"
+
+        //-------------------
+
+        // 83. 配列内の要素を指定された条件で二分探索する関数
+        function binarySearchCustom(arr, target, compareFn) { }
+        console.log(binarySearchCustom([{ id: 1 }, { id: 2 }, { id: 3 }], 2, (a, b) => a.id - b)); // 1
+
+        //-------------------
+
+        // 84. オブジェクトの深い差分を計算する関数
+        function deepDiff(obj1, obj2) { }
+        console.log(deepDiff(
+            { a: 1, b: { c: 2 } },
+            { a: 1, b: { c: 3 } }
+        )); // {b: {c: [2, 3]}}
+
+        //-------------------
+
+        // 85. 配列の要素を指定された重みに基づいてランダムに選択する関数
+        function weightedRandom(arr, weights) { }
+        console.log(weightedRandom(['A', 'B', 'C'], [0.5, 0.3, 0.2])); // 'A'（50%の確率）
+
+        //-------------------
+
+        // 86. 数式の文字列を評価する関数（基本的な演算子のみ）
+        function evaluateExpression(expr) { }
+        console.log(evaluateExpression("2 + 3 * 4")); // 14
+
+        //-------------------
+
+        // 87. オブジェクトの循環参照をチェックする関数
+        function hasCyclicReference(obj) { }
+        console.log(hasCyclicReference({ a: { b: { c: {} } } })); // false
+
+        //-------------------
+
+        // 88. 配列の要素を指定された条件でマージソートする関数
+        function mergeSort(arr, compareFn) { }
+        console.log(mergeSort([3, 1, 4, 1, 5], (a, b) => a - b)); // [1, 1, 3, 4, 5]
+
+        //-------------------
+
+        // 89. 文字列のパターンマッチング（ワイルドカード対応）を行う関数
+        function matchPattern(str, pattern) { }
+        console.log(matchPattern("hello", "h*o")); // true
+
+        //-------------------
+
+        // 90. 配列の要素を指定された条件で動的計画法を使って最適化する関数
+        function optimizeArray(arr, condition) { }
+        console.log(optimizeArray([1, 2, 3, 4], (a, b) => a + b <= 5)); // [[1, 2], [3], [4]]
+
+        //-------------------
+
+        // 91. オブジェクトの階層構造をフラット化する関数
+        function flattenObject(obj) { }
+        console.log(flattenObject({ a: { b: { c: 1 } } })); // {"a.b.c": 1}
+
+        //-------------------
+
+        // 92. 配列の要素から指定された合計値になる部分配列を全て見つける関数
+        function findAllSubArrays(arr, sum) { }
+        console.log(findAllSubArrays([1, 2, 3, 4], 5)); // [[2, 3], [1, 4]]
+
+        //-------------------
+
+        // 93. 文字列の編集距離（レーベンシュタイン距離）を計算する関数
+        function levenshteinDistance(str1, str2) { }
+        console.log(levenshteinDistance("kitten", "sitting")); // 3
+
+        //-------------------
+
+        // 94. オブジェクトの配列から指定された条件で階層構造を構築する関数
+        function buildHierarchy(arr, parentKey, childKey) { }
+        console.log(buildHierarchy([
+            { id: 1, parentId: null },
+            { id: 2, parentId: 1 }
+        ], "parentId", "id"));
+
+        //-------------------
+
+        // 95. 配列の要素を指定された条件で縦横に走査する関数
+        function traverseMatrix(arr, condition) { }
+        console.log(traverseMatrix([[1, 2], [3, 4]], (x, y) => x + y > 5));
+
+        //-------------------
+
+        // 96. 正規表現パターンを構築する関数
+        function buildRegexPattern(patterns) { }
+        console.log(buildRegexPattern(['hello', 'world'])); // /hello|world/
+
+        //-------------------
+
+        // 97. オブジェクトのスキーマ検証を行う関数
+        function validateSchema(obj, schema) { }
+        console.log(validateSchema({ name: "John", age: 30 }, { name: "string", age: "number" }));
+
+        //-------------------
+
+        // 98. 配列の要素を指定された条件で木構造に変換する関数
+        function arrayToTree(arr, condition) { }
+        console.log(arrayToTree([1, 2, 3], x => x * 2));
+
+        //-------------------
+
+        // 99. 非同期処理を直列実行する関数
+        function serialAsync(tasks) { }
+        console.log(serialAsync([
+            () => Promise.resolve(1),
+            x => Promise.resolve(x + 1)
+        ]));
+
+        //-------------------
+
+        // 100. オブジェクトの変更を監視する関数（Proxy使用）
+        function watchObject(obj, callback) { }
+        const watched = watchObject({ x: 1 }, (prop, oldVal, newVal) =>
+            console.log(`${prop} changed from ${oldVal} to ${newVal}`));
+
+        //-------------------
+
+    </script>
+
+</body>
+
+</html>
